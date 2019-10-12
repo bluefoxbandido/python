@@ -22,7 +22,11 @@ sale_prices = [
 
 def median(collection):
 	sorted_list = sorted(collection)
-	median_object = sale_prices[math.ceil((len(sorted_list))/2)]
-	return median_object
+	num_of_sales = len(sorted_list)
+	half_slice = math.floor(num_of_sales/2)
+	median = sorted_list[half_slice:(half_slice + 1)]
+	return median
+
 
 print(median(sale_prices))
+
