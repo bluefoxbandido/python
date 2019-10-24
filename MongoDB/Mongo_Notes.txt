@@ -1,0 +1,144 @@
+MongoDB Notes:
+
+    show dbs to display databases
+    (use) keyword creates file to work in
+
+Use a text editor to wrote code for mongo shell
+
+
+db.createUser({
+    user: 'jon',
+    pwd: 'pass',
+    customData: {startDate: new Date()}, 
+    roles: [
+        {role: 'clusterAdmin', db: 'admin'},
+        {role: 'readAnyDatabase', db: 'admin'},
+        'readWrite'
+    ]
+})
+
+
+db.createCollection('books')
+returns {"ok" : 1}
+
+show collections to display collections(tables)
+
+Adding to a Datbase:
+
+    #One Item
+    db.books.insert({
+        "name": "Object Oriented Programming",
+        "publishedDate": new Date(),
+        "authors": [
+            { "name": "Jon Snow"},
+            { "name": "Ned Stark"}
+        ]
+    })
+
+    #Multiple Items
+    db.books.insertMany([
+        {
+            "name": "Confident Ruby",
+            "publishedDate": new Date(),
+            "authors": [
+                {"name": "Avdi Grimm"}
+            ]
+        },
+                {
+            "name": "The War of Art",
+            "publishedDate": new Date(),
+            "authors": [
+                {"name": "Steven Pressfield"}
+            ]
+        },
+                {
+            "name": "Blink",
+            "publishedDate": new Date(),
+            "authors": [
+                {"name": "Malcolm Gladwell"}
+            ]
+        }
+
+    ])
+
+    #Find All
+    db.books.find()
+    db.books.find().pretty()
+
+    #Find Specific
+    db.books.find({key : value})
+    db.books.find({key : value}).pretty()
+
+
+#Mongo Projections
+
+Projections are various constraints to put on our query to make sure
+we only get what we want returned.
+
+db.books.find(
+    {
+        name: "Confident Ruby"
+    },
+    {
+        _id : 0,
+        name: 1,
+        authors: 1
+    }    
+).pretty()
+
+#How to Query Portions of a String 
+db.books.insert({
+    "name": "Deep Work: Rules for Focused Success in a Distracted World",
+    "publishedDate": new Date(),
+    "authors": [
+        {"name": "Cal Newport"}
+    ]
+});
+db.books.findOne({ name: /.*deep work.*/i })
+
+#How to delete documents
+db.books.remove({name: "Object Oriented Programming"}, 1)
+                                                        ^====Amount you want to remove, leave empty for all
+                                                        that match condition.
+
+#Nested Items
+db.books.find(
+    {
+        name: "Blink"
+    },
+    {
+        name: 1, 
+        publishedDate: 1,
+        "authors.name": 1
+    }
+).pretty()
+
+#Find One Method
+db.books.find({name: "Blink"})
+
+db.books.findOne({name: "Blink"})
+
+#How to check to see if a field exists
+db.books.insert( 
+  {
+    "name": "Deep Work: Rules for Focused Success in a Distracted World",
+    "publishedDate": new Date(),
+    "reviews": 100,
+    "authors": [
+      {"name": "Cal Newport"}
+    ]
+  }
+)
+
+db.books.find({reviews: { $exists: true}})
+db.books.find({reviews: { $exists: false}})
+
+#No SQL databases
+    def. not a sql database
+
+More flexxxxxxible
+
+If you have a database that have related items and fields, use a relational
+database
+
+if you need more flexibility, use a non relational database

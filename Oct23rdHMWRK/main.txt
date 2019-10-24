@@ -1,0 +1,42 @@
+1. Write a javascript function that reverses a number
+    function numberFlipper(number){
+    stringProduct = number.toString();
+    console.log(stringProduct);
+    counter = -1;
+    reversedStringProduct = "";
+    for (char in stringProduct){
+        reversedStringProduct += stringProduct[stringProduct.length + counter];
+        counter -= 1;
+    }
+    reversedInt = parseInt(reversedStringProduct);
+    return reversedInt
+    }
+    console.log(numberFlipper(987))
+
+
+2. Write a JavaScript function that checks whether a passed string is palindrome or not?
+    function pallindromeCheck(strOne, strTwo){
+    if (strOne.length != strTwo.length){
+        return false;
+    } else {
+        for (var counter = 0; counter < strOne.length; counter++){
+        if (strOne[counter] != strTwo[strTwo.length -(counter + 1)]){
+            return "false";
+        } else {
+            return "true";
+        }
+        }
+    }
+    }
+
+    console.log(pallindromeCheck("dog", "god"));
+
+4. Write a JavaScript function that returns a passed string with letters in alphabetical order.
+    function letterSorter(string){
+    let stringArray = [];
+    for (char in string){
+        stringArray[char] = string[char];
+    }
+    return stringArray.sort();
+    }
+    console.log(letterSorter("webmaster"))

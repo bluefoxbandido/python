@@ -53,29 +53,44 @@ def get_guide(id):
     guide = Guide.query.get(id)
     return guide_schema.jsonify(guide)
 
+#ENDPOINT: Updating a guide
+@app.route("/guide/<id>", methods=["PUT"])
+def guide_update(id):
+    guide = Guide.query.get(id)
+    title = request.json['title']
+    content = request.json['content']
+
+    guide.title = title
+    guide.content = content
+
+    db.session.commit()
+    return guide_schema.jsonify(guide)
+
+#ENDPOINT: Deleting a record
+@app.route("/guide/delete/<id>", methods=["DELETE"])
+def guide_delete(id):
+    guide = Guide.query.get(id)
+
+    db.session.delete(guide)
+    db.session.commit()
+
+    return guide_schema.jsonify(guide)
+
 if __name__ == '__main__':
     app.run(debug=True)
 
+
+
+#MongoDB Notes:
 """
-Weekend Homework:
+show dbs to display databases
+(use) keyword creates file to work in
 
-Build your own Flask API!
 
-Requirements:
 
-    Create a new project directory.
-    Set up your pipenv environment
-    Install all the packages you need (Hint: look in the pipfile 
-    of the project we built today) Setup a table (class) for some kind of entry of your choice. 
-    It must have at least three fields, including an ID. 
-    
-    Note: Your table may NOT for Guides!! Come up with something else!
-    Create an app.sqlite database
-    Create the endpoints to post a new entry, get all the entries, and get a single entry.
 
-Feel free to reference the project we built in class. That's your blueprint! Also, the documentation 
-is quite helpful: https://flask-sqlalchemy.palletsprojects.com/en/2.x/quickstart/
 
-Have fun!
+
+
 
 """
